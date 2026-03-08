@@ -1,38 +1,268 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: stretch;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #ffffff;
+  overflow: hidden;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ── Pozadí témat ───────────────────────────────────── */
+.app.day.theme-default  { background: #0d0d12; }
+.app.day.theme-clear    { background: #081525; }
+.app.day.theme-cloudy   { background: #12121c; }
+.app.day.theme-rain     { background: #080e18; }
+.app.day.theme-snow     { background: #10101e; }
+.app.day.theme-storm    { background: #06060e; }
+.app.day.theme-fog      { background: #0e0e14; }
+
+.app.night.theme-default { background: #080809; }
+.app.night.theme-clear   { background: #05050f; }
+.app.night.theme-cloudy  { background: #08080d; }
+.app.night.theme-rain    { background: #05080e; }
+.app.night.theme-snow    { background: #08080f; }
+.app.night.theme-storm   { background: #040408; }
+.app.night.theme-fog     { background: #07070b; }
+
+/* ── Dashboard grid ─────────────────────────────────── */
+.dashboard {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+}
+
+/* ── Panely ─────────────────────────────────────────── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 36px;
+}
+
+.panel-left {
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+
+.panel-right {
+  border-left: 1px solid rgba(255,255,255,0.07);
+}
+
+.panel-center {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+  padding: 20px 16px;
 }
 
-.App-link {
-  color: #61dafb;
+/* ── Nadpis panelu ──────────────────────────────────── */
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.data-error {
+  margin-left: auto;
+  color: #f87171;
+  font-size: 0.6rem;
+  opacity: 0.8;
+}
+
+/* ── Stat karty ─────────────────────────────────────── */
+.stat-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+}
+
+.stat-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.stat-card-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.35);
+}
+
+.stat-card-value {
+  display: block;
+  font-size: 4.6rem;
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.stat-card-unit {
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 0;
+  margin-left: 2px;
+  opacity: 0.6;
+}
+
+/* Barvy hodnot */
+.outdoor-temp { color: #7dd3fc; }
+.outdoor-hum  { color: #38bdf8; }
+.indoor-temp  { color: #fb923c; }
+.indoor-hum   { color: #22d3ee; }
+.wind-speed   { color: #c4b5fd; }
+.wind-dir     { color: #a78bfa; }
+
+/* ── Vítr karta ─────────────────────────────────────── */
+.wind-card {
+  border-color: rgba(167,139,250,0.15);
+  background: rgba(167,139,250,0.05);
+}
+
+.wind-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.wind-row .stat-card-value {
+  flex: 1;
+}
+
+.wind-divider {
+  width: 1px;
+  height: 44px;
+  background: rgba(167,139,250,0.2);
+  margin: 0 16px;
+  flex-shrink: 0;
+}
+
+.wind-dir-block {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Poznámka o senzoru */
+.sensor-note {
+  margin-top: 8px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.13);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ── Střední panel - čas ────────────────────────────── */
+.time-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 8px;
+}
+
+.time-segment {
+  font-size: 6rem;
+  font-weight: 200;
+  letter-spacing: -4px;
+  line-height: 1;
+}
+
+.time-colon {
+  font-size: 4.8rem;
+  font-weight: 100;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 4px;
+  letter-spacing: 0;
+}
+
+.time-seconds {
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.2);
+  margin-left: 8px;
+  align-self: flex-end;
+  margin-bottom: 9px;
+  letter-spacing: 0;
+}
+
+/* Datum */
+.date-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.day-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  color: #fb923c;
+}
+
+.day-number {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 3px;
+}
+
+/* Oddělovač */
+.divider {
+  width: 40px;
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  margin: 0 auto 22px;
+}
+
+/* Stav počasí */
+.weather-condition-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.condition-icon {
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.condition-text {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 4px;
 }
