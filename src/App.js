@@ -187,7 +187,7 @@ function App() {
 
   // Fetch venkovních dat z lokálního serveru (port 3001) - včetně stavu počasí
   useEffect(() => {
-    const apiUrl = `http://${window.location.hostname}:3001/api/weather`;
+    const apiUrl = '/api/weather';
     let retryTimer = null;
 
     const fetchOutdoor = async () => {

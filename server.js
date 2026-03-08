@@ -9,11 +9,55 @@
 
 const https = require('https');
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
 const LATITUDE = 49.372;
 const LONGITUDE = 18.067;
 const PORT = 3001;
 const CACHE_TTL = 10 * 60 * 1000;
+const BUILD_DIR = path.join(__dirname, 'build');
+
+const MIME_TYPES = {
+    '.html': 'text/html',
+    '.js': 'application/javascript',
+    '.css': 'text/css',
+    '.json': 'application/json',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.svg': 'image/svg+xml',
+    '.ico': 'image/x-icon',
+    '.woff': 'font/woff',
+    '.woff2': 'font/woff2',
+    '.txt': 'text/plain',
+};
+
+function serveStatic(req, res) {
+    let filePath = path.join(BUILD_DIR, req.url === '/' ? 'index.html' : req.url);
+    // Bezpečnost - neopustit build/
+    if (!filePath.startsWith(BUILD_DIR)) {
+        res.writeHead(403);
+        res.end('Forbidden');
+        return;
+    }
+    fs.stat(filePath, (err, stats) => {
+        if (err || !stats.isFile()) {
+            // SPA fallback — vrať index.html
+            filePath = path.join(BUILD_DIR, 'index.html');
+        }
+        const ext = path.extname(filePath).toLowerCase();
+        const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+        fs.readFile(filePath, (readErr, data) => {
+            if (readErr) {
+                res.writeHead(500);
+                res.end('Internal Server Error');
+                return;
+            }
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(data);
+        });
+    });
+}
 
 function degreesToCompass(deg) {
     const dirs = ['S', 'SV', 'V', 'JV', 'J', 'JZ', 'Z', 'SZ'];
@@ -125,8 +169,8 @@ const server = http.createServer(async (req, res) => {
             cacheAge: cache.fetchedAt ? Math.round((Date.now() - cache.fetchedAt) / 1000) + 's' : 'empty',
         }));
     } else {
-        res.writeHead(404);
-        res.end(JSON.stringify({ error: 'Not found' }));
+        // Servíruj React build (statické soubory)
+        serveStatic(req, res);
     }
 });
 
