@@ -38,12 +38,6 @@ const IcoOutdoor = ({ color }) => <Icon color={color} d={[
   "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
 ]} />;
 
-// Mock data - doma (čeká se na senzor)
-const mockIndoor = {
-  temperature: 21,
-  humidity: 48,
-};
-
 // Denní ikony
 const dayIcons = {
   'clear': '☀️',
@@ -162,7 +156,8 @@ function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [outdoor, setOutdoor] = useState(null);
   const [outdoorError, setOutdoorError] = useState(false);
-  const [indoor] = useState(mockIndoor);
+  const [indoor, setIndoor] = useState(null);
+  const [indoorError, setIndoorError] = useState(false);
   const [weatherCondition, setWeatherCondition] = useState({ condition: 'Načítání...', icon: '⏳' });
   const [weatherTheme, setWeatherTheme] = useState('theme-default');
   const [isNight, setIsNight] = useState(isNightTime(new Date()));
@@ -187,7 +182,7 @@ function App() {
 
   // Fetch venkovních dat z lokálního serveru (port 3001) - včetně stavu počasí
   useEffect(() => {
-    const apiUrl = '/api/weather';
+    const apiUrl = `http://192.168.0.115:3001/api/weather`;
     let retryTimer = null;
 
     const fetchOutdoor = async () => {
@@ -222,6 +217,28 @@ function App() {
     fetchOutdoor();
     const interval = setInterval(fetchOutdoor, 10 * 60 * 1000);
     return () => { clearInterval(interval); clearTimeout(retryTimer); };
+  }, []);
+
+  // Fetch indoor dat ze senzoru (RPi Zero posílá data na /api/indoor)
+  useEffect(() => {
+    const fetchIndoor = async () => {
+      try {
+        const res = await fetch('/api/indoor');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (data.temperature !== null && data.humidity !== null) {
+          setIndoor(data);
+          setIndoorError(false);
+        }
+      } catch (e) {
+        console.error('Indoor data nedostupná:', e.message);
+        setIndoorError(true);
+      }
+    };
+
+    fetchIndoor();
+    const interval = setInterval(fetchIndoor, 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   // Demo mód - loop přes všechny stavy
@@ -283,7 +300,6 @@ function App() {
   return (
     <div className={`app ${weatherTheme} ${isNight ? 'night' : 'day'}`}>
       <div className="dashboard">
-
         {/* LEVÝ SLOUPEC - Venku */}
         <div className="panel panel-left">
           <div className="panel-title">
@@ -348,6 +364,7 @@ function App() {
           <div className="panel-title">
             <IcoHome color="#fb923c" />
             <span>Doma</span>
+            {indoorError && <span className="data-error" title="Senzor nedostupný">●</span>}
           </div>
 
           <div className="stat-card">
@@ -355,7 +372,7 @@ function App() {
               <span className="stat-card-label">Teplota</span>
               <IcoTemp color="#fb923c" size={22} />
             </div>
-            <span className="stat-card-value indoor-temp">{indoor.temperature}<span className="stat-card-unit">°C</span></span>
+            <span className="stat-card-value indoor-temp">{indoor?.temperature ?? '—'}<span className="stat-card-unit">{indoor?.temperature != null ? '°C' : ''}</span></span>
           </div>
 
           <div className="stat-card">
@@ -363,10 +380,13 @@ function App() {
               <span className="stat-card-label">Vlhkost</span>
               <IcoHum color="#22d3ee" size={22} />
             </div>
-            <span className="stat-card-value indoor-hum">{indoor.humidity}<span className="stat-card-unit">%</span></span>
+            <span className="stat-card-value indoor-hum">{indoor?.humidity ?? '—'}<span className="stat-card-unit">{indoor?.humidity != null ? '%' : ''}</span></span>
           </div>
 
-          <div className="sensor-note">Senzor brzy</div>
+          {indoor?.updatedAt
+            ? <div className="sensor-note">✔ {new Date(indoor.updatedAt).toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' })}</div>
+            : <div className="sensor-note">Senzor brzy</div>
+          }
         </div>
 
       </div>
