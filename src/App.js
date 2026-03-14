@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 
-const Icon = ({ d, size = 28, color = 'currentColor', strokeWidth = 1.5 }) => (
+const Icon = ({ d, size = 28, color = 'currentColor', strokeWidth = 2 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
     stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
     {Array.isArray(d) ? d.map((path, i) => <path key={i} d={path} />) : <path d={d} />}
@@ -313,7 +313,7 @@ function App() {
           <div className="stat-card">
             <div className="stat-card-top">
               <span className="stat-card-label">Teplota</span>
-              <IcoTemp color="#7dd3fc" size={22} />
+              <IcoTemp color="#7dd3fc" size={24} />
             </div>
             <span className="stat-card-value outdoor-temp">{outdoor?.temperature ?? '—'}<span className="stat-card-unit">{outdoor?.temperature != null ? '°C' : ''}</span></span>
           </div>
@@ -321,7 +321,7 @@ function App() {
           <div className="stat-card">
             <div className="stat-card-top">
               <span className="stat-card-label">Vlhkost</span>
-              <IcoHum color="#38bdf8" size={22} />
+              <IcoHum color="#38bdf8" size={24} />
             </div>
             <span className="stat-card-value outdoor-hum">{outdoor?.humidity ?? '—'}<span className="stat-card-unit">{outdoor?.humidity != null ? '%' : ''}</span></span>
           </div>
@@ -329,14 +329,14 @@ function App() {
           <div className="stat-card wind-card">
             <div className="stat-card-top">
               <span className="stat-card-label">Vítr</span>
-              <IcoWind color="#a78bfa" size={22} />
+              <IcoWind color="#a78bfa" size={24} />
             </div>
             <div className="wind-row">
               <span className="stat-card-value wind-speed">{outdoor?.windSpeed ?? '—'}<span className="stat-card-unit">{outdoor?.windSpeed != null ? 'km/h' : ''}</span></span>
               <div className="wind-divider"></div>
               <div className="wind-dir-block">
                 <span className="stat-card-value wind-dir">{outdoor?.windDirection ?? '—'}</span>
-                <IcoCompass color="#c4b5fd" size={18} />
+                <IcoCompass color="#c4b5fd" size={20} />
               </div>
             </div>
           </div>
@@ -369,8 +369,10 @@ function App() {
                   <div key={i} className="forecast-day">
                     <span className="forecast-day-name">{fDayNames[fDay.getDay()]}</span>
                     <span className="forecast-day-icon">{getWeatherIcon(item.condition, false)}</span>
+                    <span className="forecast-day-cond">{item.condition}</span>
                     <div className="forecast-day-temps">
                       <span className="forecast-temp-max">{item.tempMax}°</span>
+                      <span className="forecast-temp-sep">/</span>
                       <span className="forecast-temp-min">{item.tempMin}°</span>
                     </div>
                   </div>
@@ -391,7 +393,7 @@ function App() {
           <div className="stat-card">
             <div className="stat-card-top">
               <span className="stat-card-label">Teplota</span>
-              <IcoTemp color="#fb923c" size={22} />
+              <IcoTemp color="#fb923c" size={24} />
             </div>
             <span className="stat-card-value indoor-temp">{indoor?.temperature ?? '—'}<span className="stat-card-unit">{indoor?.temperature != null ? '°C' : ''}</span></span>
           </div>
@@ -399,7 +401,7 @@ function App() {
           <div className="stat-card">
             <div className="stat-card-top">
               <span className="stat-card-label">Vlhkost</span>
-              <IcoHum color="#22d3ee" size={22} />
+              <IcoHum color="#22d3ee" size={24} />
             </div>
             <span className="stat-card-value indoor-hum">{indoor?.humidity ?? '—'}<span className="stat-card-unit">{indoor?.humidity != null ? '%' : ''}</span></span>
           </div>
