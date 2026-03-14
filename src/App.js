@@ -160,6 +160,7 @@ function App() {
   const [indoorError, setIndoorError] = useState(false);
   const [weatherCondition, setWeatherCondition] = useState({ condition: 'Načítání...', icon: '⏳' });
   const [weatherTheme, setWeatherTheme] = useState('theme-default');
+  const [forecast, setForecast] = useState([]);
   const [isNight, setIsNight] = useState(isNightTime(new Date()));
   const [demoIndex, setDemoIndex] = useState(0);
   const [demoNight, setDemoNight] = useState(false);
@@ -193,6 +194,7 @@ function App() {
         if (data.error) throw new Error(data.error);
         setOutdoor(data);
         setOutdoorError(false);
+        if (data.forecast && data.forecast.length > 0) setForecast(data.forecast);
         // Stav počasí pochází ze serveru (Open-Meteo, WMO kód → text)
         if (data.condition) {
           const night = isNightTime(new Date());
@@ -357,6 +359,25 @@ function App() {
             <span className="condition-icon">{weatherCondition.icon}</span>
             <span className="condition-text">{weatherCondition.condition}</span>
           </div>
+
+          {forecast.length > 0 && (
+            <div className="forecast-strip">
+              {forecast.map((item, i) => {
+                const fDay = new Date(item.date + 'T12:00:00');
+                const fDayNames = ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'];
+                return (
+                  <div key={i} className="forecast-day">
+                    <span className="forecast-day-name">{fDayNames[fDay.getDay()]}</span>
+                    <span className="forecast-day-icon">{getWeatherIcon(item.condition, false)}</span>
+                    <div className="forecast-day-temps">
+                      <span className="forecast-temp-max">{item.tempMax}°</span>
+                      <span className="forecast-temp-min">{item.tempMin}°</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* PRAVÝ SLOUPEC - Doma */}

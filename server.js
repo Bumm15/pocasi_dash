@@ -49,6 +49,8 @@ function fetchWeather() {
             'latitude=' + LATITUDE,
             'longitude=' + LONGITUDE,
             'current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,surface_pressure',
+            'daily=weather_code,temperature_2m_max,temperature_2m_min',
+            'forecast_days=7',
             'wind_speed_unit=kmh',
             'timezone=Europe%2FPrague',
         ].join('&');
@@ -83,6 +85,23 @@ function fetchWeather() {
                         updatedAt: new Date().toISOString(),
                         dataTimestamp: c.time ?? null,
                     };
+
+                    // Předpověď na příštích 5 dní (index 0 = dnes, 1-5 = další dny)
+                    const d = json.daily;
+                    const forecast = [];
+                    if (d && d.time) {
+                        for (let i = 1; i <= 5; i++) {
+                            if (!d.time[i]) break;
+                            forecast.push({
+                                date: d.time[i],
+                                condition: wmoToCondition(d.weather_code[i]),
+                                tempMax: d.temperature_2m_max[i] != null ? Math.round(d.temperature_2m_max[i]) : null,
+                                tempMin: d.temperature_2m_min[i] != null ? Math.round(d.temperature_2m_min[i]) : null,
+                            });
+                        }
+                    }
+                    result.forecast = forecast;
+
                     console.log('OK: ' + condition + ' | ' + result.temperature + 'C | ' + result.humidity + '% | vitr ' + result.windSpeed + ' km/h ' + result.windDirection);
                     resolve(result);
                 } catch (e) {

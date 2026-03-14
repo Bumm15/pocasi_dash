@@ -65,9 +65,9 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
-  padding: 20px 16px;
+  padding: 7vh 16px 20px;
 }
 
 /* ── Nadpis panelu ──────────────────────────────────── */
@@ -190,14 +190,14 @@ html, body, #root {
 }
 
 .time-segment {
-  font-size: 6rem;
+  font-size: 8rem;
   font-weight: 200;
   letter-spacing: -4px;
   line-height: 1;
 }
 
 .time-colon {
-  font-size: 4.8rem;
+  font-size: 6.4rem;
   font-weight: 100;
   color: rgba(255,255,255,0.25);
   margin-bottom: 4px;
@@ -205,12 +205,12 @@ html, body, #root {
 }
 
 .time-seconds {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 300;
   color: rgba(255,255,255,0.2);
   margin-left: 8px;
   align-self: flex-end;
-  margin-bottom: 9px;
+  margin-bottom: 12px;
   letter-spacing: 0;
 }
 
@@ -265,4 +265,56 @@ html, body, #root {
   color: rgba(255,255,255,0.6);
   text-transform: uppercase;
   letter-spacing: 4px;
+}
+
+/* ── Předpověď ─────────────────────────────────────── */
+.forecast-strip {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 10px 14px;
+  min-width: 58px;
+}
+
+.forecast-day-name {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+}
+
+.forecast-day-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.forecast-day-temps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.forecast-temp-max {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.8);
+}
+
+.forecast-temp-min {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.3);
 }
