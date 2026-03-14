@@ -95,36 +95,36 @@ html, body, #root {
 .stat-card {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 14px;
-  padding: 14px 18px;
-  margin-bottom: 10px;
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin-bottom: 7px;
 }
 
 .stat-card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
 }
 
 .stat-card-label {
-  font-size: 0.65rem;
+  font-size: 0.55rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   color: rgba(255,255,255,0.35);
 }
 
 .stat-card-value {
   display: block;
-  font-size: 4.6rem;
+  font-size: 2.8rem;
   font-weight: 200;
   line-height: 1;
-  letter-spacing: -2px;
+  letter-spacing: -1px;
 }
 
 .stat-card-unit {
-  font-size: 1.4rem;
+  font-size: 0.9rem;
   font-weight: 300;
   letter-spacing: 0;
   margin-left: 2px;
@@ -157,9 +157,9 @@ html, body, #root {
 
 .wind-divider {
   width: 1px;
-  height: 36px;
+  height: 28px;
   background: rgba(167,139,250,0.2);
-  margin: 0 10px;
+  margin: 0 8px;
   flex-shrink: 0;
 }
 
@@ -272,21 +272,22 @@ html, body, #root {
 /* ── Předpověď ─────────────────────────────────────── */
 .forecast-strip {
   display: flex;
-  gap: 7px;
+  gap: 6px;
   justify-content: center;
   width: 100%;
 }
 
 .forecast-day {
-  flex: 1;
+  width: 80px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 14px;
-  padding: 12px 6px;
+  border-radius: 12px;
+  padding: 10px 4px;
 }
 
 .forecast-day-name {
