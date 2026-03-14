@@ -362,7 +362,7 @@ function App() {
 
           {forecast.length > 0 && (
             <div className="forecast-strip">
-              {forecast.map((item, i) => {
+              {forecast.slice(0, 4).map((item, i) => {
                 const fDay = new Date(item.date + 'T12:00:00');
                 const fDayNames = ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'];
                 return (

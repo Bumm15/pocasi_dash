@@ -80,7 +80,7 @@ html, body, #root {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 4px;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.55);
   margin-bottom: 14px;
 }
 
@@ -93,8 +93,8 @@ html, body, #root {
 
 /* ── Stat karty ─────────────────────────────────────── */
 .stat-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.13);
   border-radius: 12px;
   padding: 8px 12px;
   margin-bottom: 7px;
@@ -112,12 +112,12 @@ html, body, #root {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.6);
 }
 
 .stat-card-value {
   display: block;
-  font-size: 2.8rem;
+  font-size: 3.2rem;
   font-weight: 200;
   line-height: 1;
   letter-spacing: -1px;
@@ -143,6 +143,10 @@ html, body, #root {
 .wind-card {
   border-color: rgba(167,139,250,0.15);
   background: rgba(167,139,250,0.05);
+}
+
+.wind-card .stat-card-value {
+  font-size: 1.9rem;
 }
 
 .wind-row {
@@ -175,7 +179,7 @@ html, body, #root {
   margin-top: 8px;
   font-size: 0.65rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.13);
+  color: rgba(255,255,255,0.45);
   letter-spacing: 3px;
   text-transform: uppercase;
   text-align: center;
@@ -200,7 +204,7 @@ html, body, #root {
 .time-colon {
   font-size: 5.6rem;
   font-weight: 100;
-  color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.35);
   margin-bottom: 4px;
   letter-spacing: 0;
 }
@@ -208,7 +212,7 @@ html, body, #root {
 .time-seconds {
   font-size: 1.5rem;
   font-weight: 300;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.4);
   margin-left: 6px;
   align-self: flex-end;
   margin-bottom: 10px;
@@ -235,7 +239,7 @@ html, body, #root {
 .day-number {
   font-size: 1rem;
   font-weight: 400;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.7);
   letter-spacing: 2px;
 }
 
@@ -264,7 +268,7 @@ html, body, #root {
 .condition-text {
   font-size: 1rem;
   font-weight: 500;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.9);
   text-transform: uppercase;
   letter-spacing: 3px;
 }
@@ -278,14 +282,14 @@ html, body, #root {
 }
 
 .forecast-day {
-  width: 80px;
+  width: 100px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.09);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
   border-radius: 12px;
   padding: 10px 4px;
 }
@@ -294,7 +298,7 @@ html, body, #root {
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 3px;
-  color: rgba(255,255,255,0.4);
+  color: #93c5fd;
   text-transform: uppercase;
 }
 
@@ -306,7 +310,7 @@ html, body, #root {
 .forecast-day-cond {
   font-size: 0.6rem;
   font-weight: 500;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.65);
   text-transform: uppercase;
   letter-spacing: 1px;
   text-align: center;
@@ -324,16 +328,16 @@ html, body, #root {
 .forecast-temp-max {
   font-size: 1rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.85);
+  color: #fbbf24;
 }
 
 .forecast-temp-sep {
   font-size: 0.7rem;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.3);
 }
 
 .forecast-temp-min {
   font-size: 0.85rem;
   font-weight: 400;
-  color: rgba(255,255,255,0.35);
+  color: #7dd3fc;
 }
