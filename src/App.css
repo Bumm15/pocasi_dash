@@ -261,7 +261,9 @@ html, body, #root {
 }
 
 .condition-icon {
-  font-size: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
 
@@ -303,7 +305,9 @@ html, body, #root {
 }
 
 .forecast-day-icon {
-  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
 
